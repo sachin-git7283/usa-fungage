@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+    <link rel="stylesheet" href="login-form-newjs.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+    <div class="container">
+        <div class="header">
+            <h2>Sign In Account</h2>
+        </div>
+        <form id="form" class="form">
+
+            <div class="form-control">
+                <label for="username">Email</label>
+                <input type="email" placeholder="aaa@abcd.com" id="email" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="username">Password</label>
+                <input type="password" placeholder="Password" id="password" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="username">Password check</label>
+                <input type="password" placeholder="Password check" id="password2" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <button>Sign In</button> <a href="sign-up.html" class="sign-up-btn">Sign Up</a>
+
+        </form>
+    </div>
+</div>
+        <script>
+           const form = document.getElementById('form');
+           const email = document.getElementById('email');
+           const password = document.getElementById('password');
+           const password2 = document.getElementById('password2');
+
+             form.addEventListener('submit', (event) =>{
+                 event.preventDefault();
+
+             checkinputs();
+           })
+
+           const sendData = (sRate, count) => {
+                 if (sRate === count){
+                    swal("Welcome!", "sign-up!", "success");                              
+                     location.href = 'https://trax.acrothemes.com/single-index.html';
+                 }
+             }
+
+             const successMeg = () => {
+                 let formcon = document.getElementsByClassName('form-control');
+                 var count = formcon.length - 1;
+                 for(var i = 0; i < formcon.length; i++){
+                    if(formcon[i].className === 'form-control success'){
+                        var sRate = 0 + i;
+                        console.log(sRate);                       
+                        sendData(sRate, count);
+                    }else{
+                        return false;
+                    }
+                 }
+             }
+
+           function checkinputs(){
+
+            const emailValue = email.value.trim();
+            const passwordValue = password.value.trim();
+            const password2Value = password2.value.trim();
+
+            if(emailValue === ''){
+                setErrorFor(email, 'Email cannot be blank');
+            }else if(!isEmail(emailValue)){
+                setErrorFor(email, 'Not a valid Email');
+            }else{
+                setSuccessFor(email)
+            }
+
+            if(passwordValue === ''){
+                setErrorFor(password, 'Password cannot be blank')
+            }else if(passwordValue.length <= 4){
+                setErrorFor(password, 'Password min 5 charter or number')
+            }else{
+                setSuccessFor(password);
+            }
+
+            if(password2Value === ''){
+                setErrorFor(password2, 'Conform password cannot be blank');
+            }else if(password2Value !== passwordValue){
+                setErrorFor(password2, 'Passwords does not match');
+            }else{
+                setSuccessFor(password2);
+            }
+
+            successMeg();
+
+           }
+
+           function setErrorFor(value, message){
+               const formControl = value.parentElement;
+               formControl.className = 'form-control error'
+               const small = formControl.querySelector('small');
+               small.innerText = message;
+           }
+
+           function setSuccessFor(value){
+               const formControl = value.parentElement;
+               formControl.className = 'form-control success'
+           }
+
+           function isEmail(email) {
+                return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+            }
+
+        </script>
+</body>
+</html>
